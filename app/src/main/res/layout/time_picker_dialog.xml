@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:id="@+id/lay"
+        android:layout_width="wrap_content"
+        android:layout_height="150dp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:background="@color/black"
+        android:backgroundTint="@color/white"
+        android:orientation="horizontal" >
+        <RelativeLayout
+            android:id="@+id/layoutListMinutes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+            <com.chupe.fitbud.views.CustomTimePicker
+                android:id="@+id/picker_hours"
+                android:layout_width="50dp"
+                app:min="0"
+                app:max="60"
+                android:layout_height="match_parent"
+                android:background="@color/white"
+                android:choiceMode="singleChoice"
+                android:dividerHeight="0dp"
+                android:listSelector="@drawable/ic_plan"
+                android:layout_marginLeft="10dp"
+                android:scrollbars="none" />
+            <com.chupe.fitbud.views.Circle
+                app:radius="60"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_centerVertical="true" />
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/layoutListSeconds"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            >
+            <com.chupe.fitbud.views.CustomTimePicker
+                app:min="0"
+                app:max="60"
+                android:id="@+id/picker_minutes"
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="10dp"
+                android:background="@color/white"
+                android:choiceMode="singleChoice"
+                android:dividerHeight="0dp"
+                android:listSelector="@drawable/ic_plan"
+                android:scrollbars="none"
+                />
+            <com.chupe.fitbud.views.Circle
+                app:radius="60"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_centerVertical="true"/>
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:background="@color/white"
+            >
+            <com.chupe.fitbud.views.CustomTimePicker
+                app:min="0"
+                app:max="60"
+                android:id="@+id/picker_seconds"
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="10dp"
+                android:background="@color/white"
+                android:choiceMode="singleChoice"
+                android:dividerHeight="0dp"
+                android:listSelector="@drawable/ic_plan"
+                android:scrollbars="none"
+                />
+            <com.chupe.fitbud.views.Circle
+                app:radius="60"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_centerVertical="true"/>
+
+        </RelativeLayout>
+    </LinearLayout>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Okay"
+        android:id="@+id/btn_accept"
+        android:layout_below="@+id/lay"
+        android:layout_centerHorizontal="true"
+        />
+
+</RelativeLayout>

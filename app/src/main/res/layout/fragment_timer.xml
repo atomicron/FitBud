@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".Timer">
+
+    <LinearLayout
+        android:id="@+id/lay"
+        android:layout_width="wrap_content"
+        android:layout_height="150dp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:background="@color/black"
+        android:backgroundTint="@color/white"
+        android:orientation="horizontal" >
+        <RelativeLayout
+            android:id="@+id/layoutListMinutes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+            <com.chupe.fitbud.views.CustomTimePicker
+                android:id="@+id/listMinutes"
+                android:layout_width="50dp"
+                app:min="0"
+                app:max="60"
+                android:layout_height="match_parent"
+                android:background="@color/white"
+                android:choiceMode="singleChoice"
+                android:dividerHeight="0dp"
+                android:listSelector="@drawable/ic_plan"
+                android:layout_marginLeft="10dp"
+                android:scrollbars="none" />
+            <com.chupe.fitbud.views.Circle
+                app:radius="60"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_centerVertical="true" />
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/layoutListSeconds"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            >
+            <com.chupe.fitbud.views.CustomTimePicker
+                app:min="0"
+                app:max="60"
+                android:id="@+id/listSeconds"
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="10dp"
+                android:background="@color/white"
+                android:choiceMode="singleChoice"
+                android:dividerHeight="0dp"
+                android:listSelector="@drawable/ic_plan"
+                android:scrollbars="none"
+                />
+            <com.chupe.fitbud.views.Circle
+                app:radius="60"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_centerVertical="true"/>
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:background="@color/white"
+            >
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnStart"
+                style="@style/Widget.MaterialComponents.Button.Icon"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_centerInParent="true"
+                android:insetLeft="0dp"
+                android:insetTop="0dp"
+                android:insetRight="0dp"
+                android:insetBottom="0dp"
+                app:cornerRadius="28dp"
+                app:icon="@drawable/ic_play"
+                app:iconPadding="0dp"
+                app:iconSize="24dp"
+                />
+        </RelativeLayout>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/lay"
+        android:layout_alignStart="@+id/lay"
+        android:layout_alignEnd="@+id/lay"
+        android:background="@color/white"
+        android:textAlignment="center"
+        android:textSize="48dp" />
+
+</RelativeLayout>

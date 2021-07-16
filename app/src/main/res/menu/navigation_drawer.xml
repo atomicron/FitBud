@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group
+        android:id="@+id/group1"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_item_exercises"
+            android:icon="@drawable/ic_dumbell"
+            android:title="Exercises" />
+        <item
+            android:id="@+id/nav_item_workouts"
+            android:icon="@drawable/ic_plan"
+            android:title="Workouts" />
+        <item
+            android:id="@+id/nav_item_home"
+            android:icon="@drawable/ic_home"
+            android:title="Home" />
+    </group>
+</menu>

@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".FragmentAddExercise">
+
+    <RelativeLayout
+        android:id="@+id/layout_first"
+        android:layout_width="wrap_content"
+        android:layout_height="100dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/editExercise"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:ems="10"
+            android:hint="Name or description" />
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/editExercise">
+
+            <TextView
+                android:id="@+id/textView_1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Duration"
+                android:textAlignment="center" />
+
+            <Switch
+                android:id="@+id/switchDuration"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textView_1" />
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/layout_two"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_alignStart="@+id/layout_first"
+        android:layout_alignEnd="@+id/layout_first"
+        >
+
+        <LinearLayout
+            android:id="@+id/layout_pickers"
+            android:layout_width="wrap_content"
+            android:layout_height="150dp"
+            android:visibility="invisible"
+            android:layout_centerHorizontal="true"
+
+            android:gravity="center_horizontal"
+            android:orientation="horizontal">
+
+            <com.chupe.fitbud.views.CustomTimePicker
+                android:id="@+id/timePicker1"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:scrollbars="none"
+                app:max="20"
+                app:min="0" />
+
+            <com.chupe.fitbud.views.CustomTimePicker
+                android:id="@+id/timePicker2"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:scrollbars="none"
+                app:max="20"
+                app:min="0" />
+
+            <com.chupe.fitbud.views.CustomTimePicker
+                android:id="@+id/timePicker3"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:scrollbars="none"
+                app:max="20"
+                app:min="0" />
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btn_add"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/layout_pickers"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="24dp"
+            android:text="Add" />
+    </RelativeLayout>
+
+
+
+
+</RelativeLayout>

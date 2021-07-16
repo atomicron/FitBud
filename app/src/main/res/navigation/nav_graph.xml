@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/fragment_home">
+    <fragment
+        android:id="@+id/fragment_home"
+        android:name="com.chupe.fitbud.Home"
+        android:label="fragment_blank"
+        tools:layout="@layout/fragment_home" />
+    <fragment
+        android:id="@+id/fragment_exercises"
+        android:name="com.chupe.fitbud.Exercises"
+        android:label="fragment_exercises"
+        tools:layout="@layout/fragment_exercises" />
+    <fragment
+        android:id="@+id/fragment_workouts"
+        android:name="com.chupe.fitbud.Workouts"
+        android:label="fragment_workouts"
+        tools:layout="@layout/fragment_workouts" />
+    <fragment
+        android:id="@+id/fragment_timer"
+        android:name="com.chupe.fitbud.Timer"
+        android:label="fragment_timer"
+        tools:layout="@layout/fragment_timer" />
+    <fragment
+        android:id="@+id/fragmentAddExercise"
+        android:name="com.chupe.fitbud.FragmentAddExercise"
+        android:label="fragment_add_exercise"
+        tools:layout="@layout/fragment_add_exercise" />
+</navigation>
