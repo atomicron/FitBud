@@ -32,25 +32,26 @@ public class Workout {
     private List<Action> actions;
 
     public void setActions(List<Action> tmp_actions) {
+        actions = tmp_actions;
         databaseActivities="";
-        for (Action a : tmp_actions)
+        for (Action a : tmp_actions) {
             if (a.isBreak)
                 databaseActivities += String.valueOf(0) + "." + a.brek.getDuration() + ";";
             else
-                databaseActivities += String.valueOf(a.exercise.id) + "." + a.exercise.getName() + "." + a.exercise.getDuration() + ";";
+                databaseActivities += String.valueOf(a.exercise.id) + ";";
+        }
     }
 
     public List<Action> getActions(MainActivity mainActivity) {
         List<Action> tmp_actions = new ArrayList<Action>();
         for (String str : databaseActivities.split(";")) {
-            System.out.println("Str: " + str);
-            if (str.startsWith("0.")) {
+            if (str.isEmpty()) {
+                actions = tmp_actions;
+                return actions;
+            } else if (str.startsWith("0.")) {
                 tmp_actions.add(new Action(new Break(Integer.valueOf(str.substring(2)))));
             } else {
-                String[] arr = str.split(".");
-                System.out.println("Arr[0]: " + arr[0]);
-                Integer id = Integer.valueOf(arr[0]);
-                System.out.println("ID: " + id);
+                Integer id = Integer.valueOf(str);
                 Exercise e = mainActivity.db.exerciseDAO().getExercise(id);
                 tmp_actions.add(new Action(e));
             }

@@ -19,6 +19,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.chupe.fitbud.helpers.Helpers;
 import com.chupe.fitbud.types.Action;
+import com.chupe.fitbud.types.Break;
 import com.chupe.fitbud.types.Exercise;
 import com.chupe.fitbud.types.Workout;
 import com.chupe.fitbud.views.TimePickerDialog;
@@ -44,7 +45,8 @@ public class FragmentAddWorkout extends Fragment {
     private FragmentAddWorkout currentFragment;
 
     public void onDialogAcceptClick(TimePickerDialog dialog) {
-        listArray.add(new Action(new Exercise("Break", dialog.getDuration())));
+        System.out.println("Duration = "  + dialog.getDuration());
+        listArray.add(new Action(new Break(dialog.getDuration())));
         adapter.notifyDataSetChanged();
         dialog.dismiss();
     }
@@ -151,14 +153,18 @@ public class FragmentAddWorkout extends Fragment {
             @Override
             public void run() {
                 List<Workout> tmp = mainActivity.db.workoutDAO().getAll();
-                boolean b = true;
-                for (Workout w : tmp) {
-                    if (w == workout) {
-                        b = false;
-                    }
-                }
-                if (b) return;
 
+                boolean exists = false;
+
+                for (Workout w : tmp) {
+                    if (w.id == workout.id)
+                        exists = true;
+                }
+
+                if (!exists) {
+                    System.out.println("Returning because activity exists");
+                    return;
+                }
 
                 List<Action> actions = workout.getActions((MainActivity)getActivity());
                 listArray.clear();
@@ -184,14 +190,14 @@ public class FragmentAddWorkout extends Fragment {
             @Override
             public void onClick(View v) {
                 TimePickerDialog dialog = new TimePickerDialog();
-                dialog.show(getActivity().getSupportFragmentManager(), "Some string?");
+                dialog.show(getActivity().getSupportFragmentManager(), "");
             }
         });
         btnAddExercise.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ExercisePickerDialog dialog = new ExercisePickerDialog();
-                dialog.show(getActivity().getSupportFragmentManager(), "Some string?");
+                dialog.show(getActivity().getSupportFragmentManager(), "");
             }
         });
         btnDone.setOnClickListener(new View.OnClickListener() {
@@ -224,15 +230,8 @@ public class FragmentAddWorkout extends Fragment {
                 // 2. if name is set, get current list of activities and set for workout
                 workout.setActions(listArray);
 
-//                System.out.println("Saving workout with name: " + workout.getName());
-//                for (Exercise e : listArray)
-//                    System.out.println("Saving exercise: " + e.getName());
-
                 // 3. Save workout (update db)
-
-
                 thread.start();
-
 
                 mainActivity.onBackPressed();
             }

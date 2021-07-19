@@ -32,18 +32,26 @@ public class Helpers {
         int m = s/60;
         int h = m/60;
 
-        String dur = String.valueOf(s);
-        String seconds = dur.substring(Math.max(dur.length() - 2, 0));
-        if (seconds.charAt(0) > '5') seconds = kekwJava(seconds);
+//        String dur = String.valueOf(s);
+//        String seconds = dur.substring(Math.max(dur.length() - 2, 0));
+//        System.out.println("seconds: " + seconds);
+//        if (seconds.charAt(0) > '5') seconds = kekwJava(seconds);
+//
+//        String min = String.valueOf(m);
+//        String minutes = min.substring(Math.max(min.length() - 2, 0));
+//        if (minutes.charAt(0) > '5') minutes = kekwJava(seconds);
+//
+//        String hou = String.valueOf(h);
+//        String hours = hou.substring(Math.max(hou.length() - 2, 0));
+
+        s = s%60;
+        String seconds = String.valueOf(s);
+        m = m%60;
+        String minutes = String.valueOf(m);
+        String hours = String.valueOf(h);
+
         if (seconds.length() < 2) seconds = "0" + seconds;
-
-        String min = String.valueOf(m);
-        String minutes = min.substring(Math.max(min.length() - 2, 0));
-        if (minutes.charAt(0) > '5') minutes = kekwJava(seconds);
         if (minutes.length() < 2)  minutes = "0" + minutes;
-
-        String hou = String.valueOf(h);
-        String hours = hou.substring(Math.max(hou.length() - 2, 0));
 
         return hours + ":" + minutes + ":" + seconds;
     }
