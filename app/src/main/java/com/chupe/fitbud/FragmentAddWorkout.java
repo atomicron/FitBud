@@ -43,6 +43,8 @@ public class FragmentAddWorkout extends Fragment {
     private Button btnAddBreak;
     private Button btnDone;
 
+    public Boolean exists = false;
+
     private FragmentAddWorkout currentFragment;
 
     public void onDialogAcceptClick(TimePickerDialog dialog) {
@@ -60,6 +62,10 @@ public class FragmentAddWorkout extends Fragment {
     public void remove(int position) {
         list.remove(position);
         adapter.notifyDataSetChanged();
+    }
+
+    public void setWorkoutName(String s) {
+        this.workout.setName(s);
     }
 
     static class CustomAdapter extends BaseAdapter {
@@ -110,9 +116,10 @@ public class FragmentAddWorkout extends Fragment {
 
     private CustomAdapter adapter;
 
-    public FragmentAddWorkout() {}
+//    public FragmentAddWorkout() {}
     public FragmentAddWorkout(Fragment parent) {
         this.parent = parent;
+        this.workout = new Workout("Unnamed");
     }
     public FragmentAddWorkout(Fragment parent, Workout workout) {
         this.parent = parent;
@@ -167,6 +174,7 @@ public class FragmentAddWorkout extends Fragment {
         }
 
         adapter = new CustomAdapter(this, getContext(), list );
+        System.out.println("Creating new adapter");
         listView.setAdapter(adapter);
 
         adapter.notifyDataSetChanged();
@@ -206,12 +214,10 @@ public class FragmentAddWorkout extends Fragment {
 
                 // 1. if name is not set, ask for name
                 Thread thread;
-                if (workout == null) {
-                    System.out.println("new workout");
-                    workout = new Workout("New workout");
-                    thread = new Thread(runnable_insert);
-                } else {
+                if (exists) {
                     thread = new Thread(runnable_update);
+                } else {
+                    thread = new Thread(runnable_insert);
                 }
 
                 // 2. if name is set, get current list of activities and set for workout

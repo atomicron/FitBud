@@ -9,11 +9,13 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -70,11 +72,11 @@ public class Workouts extends Fragment {
             e.printStackTrace();
         }
 
-        adapter = new CustomAdapter(getContext(), arrayList);
 
         fab = view.findViewById(R.id.floating_action_button);
         list = view.findViewById(R.id.list_workouts);
 
+        adapter = new CustomAdapter(getContext(), arrayList);
         list.setAdapter(adapter);
         adapter.notifyDataSetChanged();
 
@@ -83,6 +85,34 @@ public class Workouts extends Fragment {
             public void onClick(View v) {
                 fragmentAddWorkout = new FragmentAddWorkout(currentFragment);
 
+                // ask for name
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                builder.setTitle("Workout name");
+
+                // Set up the input
+                final EditText input = new EditText(getContext());
+                // Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
+                input.setInputType(InputType.TYPE_CLASS_TEXT);
+                builder.setView(input);
+
+                // Set up the buttons
+                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        fragmentAddWorkout.setWorkoutName(input.getText().toString());
+                        fragmentAddWorkout.exists = false;
+                    }
+                });
+                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                        return;
+                    }
+                });
+                builder.show();
+
+                // if name is entered, transition
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.nav_host_fragment, fragmentAddWorkout);
@@ -96,6 +126,7 @@ public class Workouts extends Fragment {
                 System.out.println("Hold press item " + position);
                 Workout wr = arrayList.get(position);
                 fragmentAddWorkout = new FragmentAddWorkout(currentFragment, wr);
+                fragmentAddWorkout.exists = true;
 
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -135,7 +166,7 @@ public class Workouts extends Fragment {
                         }
 
                         adapter.notifyDataSetChanged();
-                        
+
                         dialog.dismiss();
                     }
                 });
