@@ -83,7 +83,6 @@ public class Workouts extends Fragment {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                fragmentAddWorkout = new FragmentAddWorkout(currentFragment);
 
                 // ask for name
                 AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
@@ -99,24 +98,24 @@ public class Workouts extends Fragment {
                 builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        fragmentAddWorkout = new FragmentAddWorkout(currentFragment);
                         fragmentAddWorkout.setWorkoutName(input.getText().toString());
                         fragmentAddWorkout.exists = false;
+
+                        // if name is entered, transition
+                        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                        fragmentTransaction.replace(R.id.nav_host_fragment, fragmentAddWorkout);
+                        fragmentTransaction.commit();
                     }
                 });
                 builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.cancel();
-                        return;
                     }
                 });
                 builder.show();
-
-                // if name is entered, transition
-                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.nav_host_fragment, fragmentAddWorkout);
-                fragmentTransaction.commit();
             }
         });
 

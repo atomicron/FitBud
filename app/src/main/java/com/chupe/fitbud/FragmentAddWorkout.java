@@ -2,14 +2,12 @@ package com.chupe.fitbud;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.telephony.BarringInfo;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
 import androidx.activity.OnBackPressedCallback;
@@ -28,13 +26,11 @@ import com.chupe.fitbud.views.TimePickerDialog;
 import java.util.ArrayList;
 import java.util.List;
 
-import io.reactivex.internal.schedulers.ExecutorScheduler;
-
 public class FragmentAddWorkout extends Fragment {
 
     private Fragment parent;
     private ListView listView;
-    private List<Exercise> list = new ArrayList<>();
+    private List<Action> listArray = new ArrayList<>();
     private Workout workout;
 
     private MainActivity mainActivity;
@@ -48,19 +44,19 @@ public class FragmentAddWorkout extends Fragment {
     private FragmentAddWorkout currentFragment;
 
     public void onDialogAcceptClick(TimePickerDialog dialog) {
-        list.add(new Exercise("Break", dialog.getDuration()));
+        listArray.add(new Action(new Exercise("Break", dialog.getDuration())));
         adapter.notifyDataSetChanged();
         dialog.dismiss();
     }
 
     public void onDialogExerciseClick(ExercisePickerDialog dialog) {
-        list.add(dialog.getExercise());
+        listArray.add(new Action(dialog.getExercise()));
         adapter.notifyDataSetChanged();
         dialog.dismiss();
     }
 
     public void remove(int position) {
-        list.remove(position);
+        listArray.remove(position);
         adapter.notifyDataSetChanged();
     }
 
@@ -71,9 +67,9 @@ public class FragmentAddWorkout extends Fragment {
     static class CustomAdapter extends BaseAdapter {
         Context context;
         FragmentAddWorkout parentFragment;
-        List<Exercise> list;
+        List<Action> list;
         private LayoutInflater inflater;
-        public CustomAdapter(FragmentAddWorkout parent, Context context, List<Exercise> list) {
+        public CustomAdapter(FragmentAddWorkout parent, Context context, List<Action> list) {
             this.parentFragment = parent;
             this.context = context;
             this.list = list;
@@ -86,9 +82,15 @@ public class FragmentAddWorkout extends Fragment {
             if (vi == null)
                 vi = inflater.inflate(R.layout.layout_add_workout_adapter, null);
             TextView text = vi.findViewById(R.id.text);
-            text.setText(list.get(position).getName());
             TextView textDuration = vi.findViewById(R.id.text_duration);
-            textDuration.setText(Helpers.toTime(list.get(position).getDuration()));
+            if (list.get(position).isExercise) {
+                text.setText(list.get(position).exercise.getName());
+                textDuration.setText(Helpers.toTime(list.get(position).exercise.getDuration()));
+            }
+            if (list.get(position).isBreak) {
+                text.setText(list.get(position).brek.getName());
+                textDuration.setText(Helpers.toTime(list.get(position).brek.getDuration()));
+            }
 
             Button btnDelete = vi.findViewById(R.id.btn_remove);
             btnDelete.setOnClickListener(new View.OnClickListener() {
@@ -148,21 +150,20 @@ public class FragmentAddWorkout extends Fragment {
         Runnable runnable = new Runnable() {
             @Override
             public void run() {
-                if (workout == null)
-                    return;
-
-                String[] arr = workout.getActivities();
-                List<Exercise> ex = mainActivity.db.exerciseDAO().getAll();
-
-                list.clear();
-
-                for (int i = 0; i < arr.length; i++) {
-                    for (Exercise e : ex) {
-                        if (String.valueOf(e.id).equals(arr[i])) {
-                            list.add(e);
-                        }
+                List<Workout> tmp = mainActivity.db.workoutDAO().getAll();
+                boolean b = true;
+                for (Workout w : tmp) {
+                    if (w == workout) {
+                        b = false;
                     }
                 }
+                if (b) return;
+
+
+                List<Action> actions = workout.getActions((MainActivity)getActivity());
+                listArray.clear();
+                for (Action a : actions)
+                    listArray.add(a);
             }
         };
         Thread thread = new Thread(runnable);
@@ -173,7 +174,7 @@ public class FragmentAddWorkout extends Fragment {
             e.printStackTrace();
         }
 
-        adapter = new CustomAdapter(this, getContext(), list );
+        adapter = new CustomAdapter(this, getContext(), listArray);
         System.out.println("Creating new adapter");
         listView.setAdapter(adapter);
 
@@ -221,11 +222,11 @@ public class FragmentAddWorkout extends Fragment {
                 }
 
                 // 2. if name is set, get current list of activities and set for workout
-                workout.setActivities(list);
+                workout.setActions(listArray);
 
-                System.out.println("Saving workout with name: " + workout.getName());
-                for (Exercise e : list)
-                    System.out.println("Saving exercise: " + e.getName());
+//                System.out.println("Saving workout with name: " + workout.getName());
+//                for (Exercise e : listArray)
+//                    System.out.println("Saving exercise: " + e.getName());
 
                 // 3. Save workout (update db)
 

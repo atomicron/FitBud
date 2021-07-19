@@ -1,25 +1,17 @@
 package com.chupe.fitbud;
 
-import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.navigation.NavController;
-import androidx.navigation.fragment.NavHostFragment;
-import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
 import androidx.room.Room;
 
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
 import com.chupe.fitbud.database.AppDatabase;
-import com.chupe.fitbud.types.Exercise;
 import com.chupe.fitbud.views.TimePickerDialog;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -31,7 +23,7 @@ public class MainActivity extends AppCompatActivity implements
     , ExercisePickerDialog.ExercisePickerDialogInterface
 {
 
-    AppDatabase db;
+    public AppDatabase db;
 
 
     private NavigationView navView;

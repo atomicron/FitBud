@@ -23,4 +23,7 @@ public interface ExerciseDAO {
 
     @Delete
     void deleteExercise(Exercise exercise);
+
+    @Query("SELECT * FROM exercise WHERE id=:id")
+    Exercise getExercise(int id);
 }
